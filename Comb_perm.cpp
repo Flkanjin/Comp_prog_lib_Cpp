@@ -56,6 +56,10 @@ public:
         long long ret(permutation(n, r));
         return ret * fact_inv[r] % m;
     }
+
+    long long multi_combination(int n, int r){
+        return combination(n + r - 1, r);
+    }
  
     long long factorial(int a){
         return fact[a];
@@ -64,4 +68,5 @@ public:
     long long inv_factorial(int a){
         return fact_inv[a];
     }
+
 };
