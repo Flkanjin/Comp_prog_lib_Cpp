@@ -15,7 +15,8 @@ public:
         for(int i(2); i <= n; ++i) fact_inv[i] = inv(fact[i]);
     }
  
-    void resize(int N){
+    bool resize(int N){
+        if(N <= n) return false;
         fact.resize(N+1);
         fact_inv.resize(N+1);
         if(!n && N){
@@ -24,6 +25,7 @@ public:
         for(int i(std::max(2, n+1)); i <= N; ++i) fact[i] = fact[i - 1] * i % m;
         for(int i(std::max(2, n+1)); i <= N; ++i) fact_inv[i] = inv(fact[i], m);
         n = N;
+        return true;
     }
  
     long long power(long long a, unsigned long long b){
