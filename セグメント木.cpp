@@ -104,7 +104,7 @@ public:
 
     void update(int k, T a){
         k += n - 1;
-        int moto = dat[k];
+        T moto = dat[k];
         dat[k] = a;
         while(k){
             k = (k - 1) / 2;
