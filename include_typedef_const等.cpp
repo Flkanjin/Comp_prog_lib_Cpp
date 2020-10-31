@@ -34,6 +34,7 @@
 #include <vector>
 
 const int MOD = 1'000'000'007;
+const int MOD2 = 998'244'353;
 const int INF = 1'000'000'000; //1e9
 const int NIL = -1;
 const long long LINF = 1'000'000'000'000'000'000; // 1e18
