@@ -1,16 +1,15 @@
 #include <vector>
 
 
-class comb_perm{
+template<unsigned long long m> class comb_perm{
 private:
-    unsigned long long m;
     int n;
     std::vector<long long> fact, fact_inv;
 public:
-    comb_perm(unsigned long long M): m(M), n(0), fact(1), fact_inv(1){
+    comb_perm(): n(0), fact(1), fact_inv(1){
         fact[0] = fact_inv[0] = 1;
     }
-    comb_perm(unsigned long long M, int N): m(M), n(N), fact(N+1), fact_inv(N+1){
+    comb_perm(int N):n(N), fact(N+1), fact_inv(N+1){
         fact[0] = fact[1] = fact_inv[0] = fact_inv[1] = 1;
         for(int i(2); i <= n; ++i) fact[i] = fact[i - 1] * i % m;
         for(int i(2); i <= n; ++i) fact_inv[i] = inv(fact[i]);
