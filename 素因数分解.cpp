@@ -1,7 +1,22 @@
 #include <map>
+#include <utility>
 #include <vector>
 
 
+
+std::vector<std::pair<long long, int>> primeFactorisation_Vector_Pair(long long n){
+    std::vector<std::pair<long long, int>> ret;
+    for(long long i(2); i * i <= n; ++i){
+        int cnt(0);
+        while(!(n % i)){
+            ++cnt;
+            n /= i;
+        }
+        ret.emplace_back(i, cnt);
+    }
+    if(n > 1) ret.emplace_back(n, 1);;
+    return ret;
+}
 
 std::map<long long, int> primeFactorisation_Map(long long n){
     std::map<long long, int> mp;
