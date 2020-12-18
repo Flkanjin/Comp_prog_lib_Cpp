@@ -6,7 +6,7 @@ struct edge{
     edge(int To, int Cost): to(To), cost(Cost){};
 };
 
-
+// 0 -> goal をDAGに
 std::vector<std::vector<edge>> makeDAG_Cost(std::vector<std::vector<edge>>& G, std::vector<int>& d, int goal){
     int V(G.size());
     std::vector<std::vector<edge>> DAG(V);
@@ -20,6 +20,7 @@ std::vector<std::vector<edge>> makeDAG_Cost(std::vector<std::vector<edge>>& G, s
             DAG[i].push_back({e.to, 1});
         }
     }
+    return DAG;
 }
 
 std::vector<std::vector<int>> makeDAGWithoutCost(std::vector<std::vector<int>>& G, std::vector<int>& d, int goal){
@@ -35,6 +36,7 @@ std::vector<std::vector<int>> makeDAGWithoutCost(std::vector<std::vector<int>>& 
             DAG[i].push_back(e);
         }
     }
+    return DAG;
 }
 
 
