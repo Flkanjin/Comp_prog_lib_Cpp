@@ -241,11 +241,11 @@ Polygon2D convex_hll(std::vector<Point2D> &v){
     std::vector<Point2D> ret(2*n);
     //下側
     for(int i(0); i < n; ret[k++] = v[i++]){
-        while(k >= 2 && ret[k-2].ccw(ret[k-1], v[i]) <= 0) --k;
+        while(k >= 2 && cross(ret[k-1] - ret[k-2], v[i] - ret[k-1]) < 0) --k;
     }
     //上側
     for(int i(n-2), t = k + 1; i >= 0; ret[k++] = v[i--]){
-        while(k >= t && ret[k-2].ccw(ret[k-1], v[i]) <= 0) --k;
+        while(k >= t && cross(ret[k-1] - ret[k-2], v[i] - ret[k-1]) < 0) --k;
     }
     ret.resize(k-1);
     return ret;
