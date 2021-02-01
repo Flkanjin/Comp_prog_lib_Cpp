@@ -1,4 +1,4 @@
-//　O(V log E) 負の辺があると使えない 頂点sからの距離を求める
+//　O(E log V) 負の辺があると使えない 頂点sからの距離を求める
 #include <algorithm>
 #include <queue>
 #include <vector>
