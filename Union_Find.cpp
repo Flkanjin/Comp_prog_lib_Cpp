@@ -8,11 +8,7 @@ class UnionFind{
 
 public:
     UnionFind(): n(0){}
-    UnionFind(int N): n(N), par(n){
-        for(int i(0); i < n; ++i){
-            par[i] = -1;
-        }
-    }
+    UnionFind(int N): n(N), par(n, -1){}
 
     void resize(int N){
         n = N;
@@ -45,15 +41,15 @@ public:
 
     std::vector<std::vector<int>> groups(){
         std::vector<int> root_buf(n), group_size(n);
-        for(int i(0); i < n; ++i){
+        for(int i{0}; i < n; ++i){
             root_buf[i] = find(i);
             ++group_size[root_buf[i]];
         }
         std::vector<std::vector<int>> ret(n);
-        for(int i(0); i < n; ++i){
+        for(int i{0}; i < n; ++i){
             ret[i].reserve(group_size[i]);
         }
-        for(int i(0); i < n; ++i){
+        for(int i{0}; i < n; ++i){
             ret[root_buf[i]].push_back(i);
         }
         ret.erase(
@@ -73,12 +69,7 @@ template<class AbelianG> class WeightedUnionFind{
 public:
     WeightedUnionFind(): n(0){}
     WeightedUnionFind(int N, AbelianG UNITY = 0):
-        n(N), par(n), diff_weight(n){
-            for(int i(0); i < n; ++i){
-                par[i] = -1;
-                diff_weight[i] = UNITY;
-            }
-        }
+        n(N), par(n, -1), diff_weight(n, UNITY){}
  
     void resize(int N, AbelianG UNITY = 0){
         n = N;
@@ -124,15 +115,15 @@ public:
 
     std::vector<std::vector<int>> groups(){
         std::vector<int> root_buf(n), group_size(n);
-        for(int i(0); i < n; ++i){
+        for(int i{0}; i < n; ++i){
             root_buf[i] = find(i);
             ++group_size[root_buf[i]];
         }
         std::vector<std::vector<int>> ret(n);
-        for(int i(0); i < n; ++i){
+        for(int i{0}; i < n; ++i){
             ret[i].reserve(group_size[i]);
         }
-        for(int i(0); i < n; ++i){
+        for(int i{0}; i < n; ++i){
             ret[root_buf[i]].push_back(i);
         }
         ret.erase(
