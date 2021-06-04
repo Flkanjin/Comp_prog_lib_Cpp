@@ -2,7 +2,8 @@
 #include <algorithm>
 #include <queue>
 #include <vector>
-const int INF = 1'000'000'000; // 1e9
+const int NIL = -1;
+const long long LINF = 1'000'000'000'000'000'000; // 1e18
 
 struct edge{
     int to, cost;
@@ -16,48 +17,62 @@ std::vector<int> d; //sからの距離
 */
 
 
-void dijkstra(std::vector<std::vector<edge>>& G, std::vector<int>& d, int s){
+void dijkstra(int s, std::vector<std::vector<edge>> &G, std::vector<long long> &d, std::vector<int> &prv){
     //pair<int, int> first: 距離　second: 頂点
     std::priority_queue<std::pair<int, int>,
                         std::vector<std::pair<int, int>>,
                         std::greater<std::pair<int, int>>> que;
-    int V(G.size());
-    d.resize(V, INF+3);
+    int V{int(G.size())};
+    d.resize(V, LINF+3);
+    prv.resize(V, NIL);
     d[s] = 0;
-    que.push({0, s});
+    que.emplace(0, s);
 
     while(!que.empty()){
-        std::pair<int, int> p(que.top()); que.pop();
-        int v(p.second);
+        std::pair<int, int> p{que.top()}; que.pop();
+        int v{p.second};
         if(d[v] < p.first) continue;
         for(edge &e: G[v]){
             if(d[e.to] > d[v] + e.cost){
                 d[e.to] = d[v] + e.cost;
-                que.push({d[e.to], e.to});
+                prv[e.to] = v;
+                que.emplace(d[e.to], e.to);
             }
         }
     }
 }
 
-void dijkstra_WithoutCost(std::vector<std::vector<int>>& G, std::vector<int>& d, int s){
+void dijkstraWithoutCost(int s, std::vector<std::vector<int>> &G, std::vector<long long> &d, std::vector<int> &prv){
     //pair<int, int> first: 距離　second: 頂点
     std::priority_queue<std::pair<int, int>,
                         std::vector<std::pair<int, int>>,
                         std::greater<std::pair<int, int>>> que;
-    int V(G.size());
-    d.resize(V, INF+3);
+    int V{int(G.size())};
+    d.resize(V, LINF+3);
+    prv.resize(V, NIL);
     d[s] = 0;
-    que.push({0, s});
+    que.emplace(0, s);
 
     while(!que.empty()){
-        std::pair<int, int> p(que.top()); que.pop();
-        int v(p.second);
+        std::pair<int, int> p{que.top()}; que.pop();
+        int v{p.second};
         if(d[v] < p.first) continue;
-        for(int &e: G[v]){
-            if(d[e] > d[v] + 1){
-                d[e] = d[v] + 1;
-                que.push({d[e], e});
+        for(int &u: G[v]){
+            if(d[u] > d[v] + 1){
+                d[u] = d[v] + 1;
+                prv[u] = v;
+                que.emplace(d[u], u);
             }
         }
     }
+}
+
+
+std::vector<int> buildPath(const std::vector<int> &prv, int t){
+    std::vector<int> path;
+    for(int u = t; u >= 0; u = prv[u]){
+        path.push_back(u);
+    }
+    reverse(path.begin(), path.end());
+    return path;
 }

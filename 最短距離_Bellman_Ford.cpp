@@ -2,43 +2,36 @@
 #include <algorithm>
 #include <vector>
 const long long LINF = 1'000'000'000'000'000'000; // 1e18
+const int NIL = -1;
 
 struct edge{
     int from, to, cost;
     edge(int From, int To, int Cost): from(From), to(To), cost(Cost){}
 };
 
-void bellmanFord_Cost(int V, std::vector<edge>& es, std::vector<long long>& d, int s){
+// d: 距離, prv: 最短経路での一つ前の頂点
+// 負閉路が存在しない 即ち最短距離が求まっている場合: true
+bool bellmanFord(int V, int s, std::vector<edge> &G, std::vector<long long> &d, std::vector<int> &prv){
     d.resize(V, LINF);
+    prv.resize(V, NIL);
     d[s] = 0;
-    while(1){
-        bool update = false;
-        for(auto &e : es){
+    bool negLoop = false;
+    for(int i = 0; i < V; ++i){
+        for(auto &e: G){
             if(d[e.from] != LINF && d[e.to] > d[e.from] + e.cost){
                 d[e.to] = d[e.from] + e.cost;
-                update = true;
-            }
-        }
-        if(!update) break;
-    }
-}
-
-bool find_negative_loop_Cost(int V, std::vector<edge>& es, std::vector<long long>& d, int s){
-    d.resize(V, LINF);
-    d[s] = 0;
-    for(int i(0); i < V; ++i){
-        for(auto &e : es){
-            if(d[e.from] != LINF && d[e.to] > d[e.from] + e.cost){
-                d[e.to] = d[e.from] + e.cost;
+                prv[e.to] = e.from;
                 
-                //V回目に更新なら負閉路あり
-                if(i == V-1) return true;
+                // V回目に更新があれば負閉路
+                if(i == V-1){
+                    d[e.to] = -LINF;
+                    negLoop = true;
+                }
             }
         }
     }
-    return false;
+    return !negLoop;
 }
-
 
 
 struct Edge{
@@ -46,33 +39,35 @@ struct Edge{
     Edge(int From, int To): from(From), to(To){}
 };
 
-void bellmanFord_WithoutCost(int V, std::vector<Edge>& es, std::vector<long long>& d, int s){
+// d: 距離, prv: 最短経路での一つ前の頂点
+// 負閉路が存在しない 即ち最短距離が求まっている場合: true
+bool bellmanFordWithoutCost(int V, int s, std::vector<Edge> &G, std::vector<long long> &d, std::vector<int> &prv){
     d.resize(V, LINF);
+    prv.resize(V, NIL);
     d[s] = 0;
-    while(1){
-        bool update = false;
-        for(auto &e : es){
+    bool negLoop = false;
+    for(int i = 0; i < V; ++i){
+        for(auto &e: G){
             if(d[e.from] != LINF && d[e.to] > d[e.from] + 1){
                 d[e.to] = d[e.from] + 1;
-                update = true;
+                prv[e.to] = e.from;
+                
+                // V回目に更新があれば負閉路
+                if(i == V-1){
+                    d[e.to] = -LINF;
+                    negLoop = true;
+                }
             }
         }
-        if(!update) break;
     }
+    return !negLoop;
 }
 
-bool find_negative_loop_WIthoutCost(int V, std::vector<Edge>& es, std::vector<long long>& d, int s){
-    d.resize(V, LINF);
-    d[s] = 0;
-    for(int i(0); i < V; ++i){
-        for(auto &e : es){
-            if(d[e.from] != LINF && d[e.to] > d[e.from] + 1){
-                d[e.to] = d[e.from] + 1;
-                
-                //V回目に更新なら負閉路あり
-                if(i == V-1) return true;
-            }
-        }
+std::vector<int> buildPath(const std::vector<int> &prv, int t){
+    std::vector<int> path;
+    for(int u = t; u >= 0; u = prv[u]){
+        path.push_back(u);
     }
-    return false;
+    reverse(path.begin(), path.end());
+    return path;
 }
