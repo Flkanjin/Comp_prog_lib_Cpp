@@ -54,6 +54,10 @@ template<class T, class S> inline bool chmin(T &a, const S &b){
     return false;
 }
 
+template<class T, class S> inline bool exist(std::set<T> &s, const S &e){
+    return (s.find(e) != s.end());
+}
+
 
 
 
