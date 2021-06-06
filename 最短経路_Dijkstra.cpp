@@ -19,9 +19,9 @@ std::vector<int> d; //sからの距離
 
 void dijkstra(int s, std::vector<std::vector<edge>> &G, std::vector<long long> &d, std::vector<int> &prv){
     //pair<int, int> first: 距離　second: 頂点
-    std::priority_queue<std::pair<int, int>,
-                        std::vector<std::pair<int, int>>,
-                        std::greater<std::pair<int, int>>> que;
+    std::priority_queue<std::pair<long long, int>,
+                        std::vector<std::pair<long long, int>>,
+                        std::greater<std::pair<long long, int>>> que;
     int V{int(G.size())};
     d.resize(V, LINF+3);
     prv.resize(V, NIL);
@@ -29,7 +29,7 @@ void dijkstra(int s, std::vector<std::vector<edge>> &G, std::vector<long long> &
     que.emplace(0, s);
 
     while(!que.empty()){
-        std::pair<int, int> p{que.top()}; que.pop();
+        std::pair<long long, int> p{que.top()}; que.pop();
         int v{p.second};
         if(d[v] < p.first) continue;
         for(edge &e: G[v]){
@@ -44,9 +44,9 @@ void dijkstra(int s, std::vector<std::vector<edge>> &G, std::vector<long long> &
 
 void dijkstraWithoutCost(int s, std::vector<std::vector<int>> &G, std::vector<long long> &d, std::vector<int> &prv){
     //pair<int, int> first: 距離　second: 頂点
-    std::priority_queue<std::pair<int, int>,
-                        std::vector<std::pair<int, int>>,
-                        std::greater<std::pair<int, int>>> que;
+    std::priority_queue<std::pair<long long, int>,
+                        std::vector<std::pair<long long, int>>,
+                        std::greater<std::pair<long long, int>>> que;
     int V{int(G.size())};
     d.resize(V, LINF+3);
     prv.resize(V, NIL);
@@ -54,7 +54,7 @@ void dijkstraWithoutCost(int s, std::vector<std::vector<int>> &G, std::vector<lo
     que.emplace(0, s);
 
     while(!que.empty()){
-        std::pair<int, int> p{que.top()}; que.pop();
+        std::pair<long long, int> p{que.top()}; que.pop();
         int v{p.second};
         if(d[v] < p.first) continue;
         for(int &u: G[v]){
