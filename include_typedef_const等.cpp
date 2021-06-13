@@ -42,20 +42,15 @@ const long long LINF = 1'000'000'000'000'000'000; // 1e18
 const long double EPS = 1E-10;
 
 template<class T, class S> inline bool chmax(T &a, const S &b){
-    if(a < b){
-        a = b; return true;
-    }
+    if(a < b){a = b; return true;}
     return false;
 }
 template<class T, class S> inline bool chmin(T &a, const S &b){
-    if(b < a){
-        a = b; return true;
-    }
+    if(b < a){a = b; return true;}
     return false;
 }
-
 template<class T, class S> inline bool exist(std::set<T> &s, const S &e){
-    return (s.find(e) != s.end());
+    return (s.find(e) != std::end(s));
 }
 
 
