@@ -6,8 +6,8 @@
 
 std::vector<std::pair<long long, int>> primeFactorisation_Vector_Pair(long long n){
     std::vector<std::pair<long long, int>> ret;
-    for(long long i(2); i * i <= n; ++i){
-        int cnt(0);
+    for(long long i{2}; i * i <= n; ++i){
+        int cnt{};
         while(!(n % i)){
             ++cnt;
             n /= i;
@@ -20,7 +20,7 @@ std::vector<std::pair<long long, int>> primeFactorisation_Vector_Pair(long long 
 
 std::map<long long, int> primeFactorisation_Map(long long n){
     std::map<long long, int> mp;
-    for(long long i(2); i * i <= n; ++i)
+    for(long long i{2}; i * i <= n; ++i)
         while(!(n % i)){
             ++mp[i]; n /= i;
         }
@@ -31,7 +31,7 @@ std::map<long long, int> primeFactorisation_Map(long long n){
 //指数無し
 std::vector<long long> primeFactorisation_Vector(long long n){
     std::vector<long long> v;
-    for(long long i(2); i * i <= n; ++i)
+    for(long long i{2}; i * i <= n; ++i)
         while(!(n % i)){
             v.push_back(i); n /= i;
         }
@@ -41,7 +41,7 @@ std::vector<long long> primeFactorisation_Vector(long long n){
 
 std::vector<long long> primeFactor(long long n){
     std::vector<long long> vec;
-    for(long long i(2); i * i <= n; ++i){
+    for(long long i{2}; i * i <= n; ++i){
         if(!(n % i)){
             vec.push_back(i);
             while(!(n % i)){
@@ -51,4 +51,21 @@ std::vector<long long> primeFactor(long long n){
     }
     if(n > 1) vec.push_back(n);
     return vec;
+}
+
+
+// オイラーのトーシェント
+std::vector<int> EulerTotient(int n){
+    std::vector<int> ret(n+1);
+    for(int i{0}; i < n; ++i){
+        ret[i] = i;
+    }
+    for(int i{2}; i <= n; ++i){
+        if(ret[i] == i){
+            for(int j{i}; j <= n; j += i){
+                ret[j] = ret[j] / i * (i-1);
+            }
+        }
+    }
+    return ret;
 }
