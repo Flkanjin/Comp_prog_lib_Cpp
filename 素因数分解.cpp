@@ -1,4 +1,5 @@
 #include <map>
+#include <set>
 #include <utility>
 #include <vector>
 
@@ -29,6 +30,20 @@ std::map<long long, int> primeFactorisation_Map(long long n){
 }
 
 //指数無し
+
+std::set<long long> primeFactorisation_Set(long long n){
+    std::set<long long> s;
+    for(long long i{2}; i * i <= n; ++i)
+        if(!(n % i)){
+            s.insert(i);
+            while(!(n % i)){
+                n /= i;
+            }
+        }
+    if(n > 1) s.insert(n);
+    return s;
+}
+
 std::vector<long long> primeFactorisation_Vector(long long n){
     std::vector<long long> v;
     for(long long i{2}; i * i <= n; ++i)
