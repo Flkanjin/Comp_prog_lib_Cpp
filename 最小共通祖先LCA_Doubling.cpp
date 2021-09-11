@@ -32,7 +32,7 @@ public:
         }
         build();
     }
- 
+
 private:
     void build(){
         M = int(std::log2(V)) + 3;
@@ -49,14 +49,14 @@ private:
         }
         dfs(root, 0);
     }
- 
+
     void dfs(int cur, int depth){
         d[cur] = depth;
         for(auto e: child[cur]){
             dfs(e, depth + 1);
         }
     }
- 
+
 public:
     int LCA(int u, int v){
         if(d[u] > d[v]) std::swap(u, v);
@@ -78,7 +78,7 @@ public:
         return d[u] + d[v] - 2 * d[a];
     }
 };
- 
+
 //木のグラフを親への有向グラフへ
 void treeToParentDFS(int cur, std::vector<int> &par, std::vector<std::vector<int>> &G){
     for(auto e: G[cur]){

@@ -16,7 +16,7 @@ public:
         for(int j(0), j_len(2*i-1); j < j_len; ++j)
             dat[j] = fill;
     }
- 
+
     void update(int k, T a){
         k += n - 1;
         int moto = dat[k];
@@ -26,18 +26,18 @@ public:
             dat[k] = std::min(dat[2*k+1], dat[2*k+2]);
         }
     }
- 
+
     T getMin(int a, int b, int k=0, int l=0, int r=-1){
         //[a, b[であることに注意
         if(r < 0) r = n;
         if(r <= a || b <= l) return fill;
         if(a <= l && r <= b) return dat[k];
- 
+
         int vl = getMin(a, b, 2*k+1, l, (l+r)/2);
         int vr = getMin(a, b, 2*k+2, (l+r)/2, r);
         return std::min(vl, vr);
     }
- 
+
     T getvalue(int k){
         return dat[k+n-1];
     }
@@ -58,7 +58,7 @@ public:
         for(int j(0), j_len(2*i-1); j < j_len; ++j)
             dat[j] = fill;
     }
- 
+
     void update(int k, T a){
         k += n - 1;
         int moto = dat[k];
@@ -68,18 +68,18 @@ public:
             dat[k] = std::max(dat[2*k+1], dat[2*k+2]);
         }
     }
- 
+
     T getMax(int a, int b, int k=0, int l=0, int r=-1){
         //[a, b[であることに注意
         if(r < 0) r = n;
         if(r <= a || b <= l) return fill;
         if(a <= l && r <= b) return dat[k];
- 
+
         int vl = getMax(a, b, 2*k+1, l, (l+r)/2);
         int vr = getMax(a, b, 2*k+2, (l+r)/2, r);
         return std::max(vl, vr);
     }
- 
+
     T getvalue(int k){
         return dat[k+n-1];
     }

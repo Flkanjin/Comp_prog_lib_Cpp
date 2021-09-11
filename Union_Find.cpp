@@ -65,30 +65,30 @@ template<class AbelianG> class WeightedUnionFind{
     int n;
     std::vector<int> par;//根ならマイナス*要素数
     std::vector<AbelianG> diff_weight;
- 
+
 public:
     WeightedUnionFind(): n(0){}
     WeightedUnionFind(int N, AbelianG UNITY = 0):
         n(N), par(n, -1), diff_weight(n, UNITY){}
- 
+
     void resize(int N, AbelianG UNITY = 0){
         n = N;
         par.resize(n, -1);
         diff_weight.resize(n, UNITY);
     }
- 
+
     int find(int x){
         if(par[x] < 0) return x;
         int r(find(par[x]));
         diff_weight[x] += diff_weight[par[x]];
         return par[x] = r;
     }
- 
+
     AbelianG weight(int x){
         find(x);
         return diff_weight[x];
     }
- 
+
     //weight(y) = weight(x) + w
     bool unit(int x, int y, AbelianG w){
         w += weight(x); w -= weight(y);
@@ -104,11 +104,11 @@ public:
         diff_weight[y] = w;
         return true;
     }
- 
+
     bool same(int x, int y){
         return find(x) == find(y);
     }
- 
+
     int howmany(int x){ //同じグループに属すものの個数(自分を含む)
         return -par[find(x)];
     }

@@ -14,7 +14,7 @@ public:
         for(int i{2}; i <= n; ++i) fact[i] = fact[i - 1] * i % m;
         for(int i{2}; i <= n; ++i) fact_inv[i] = inv(fact[i]);
     }
- 
+
     bool resize(int N){
         if(N <= n) return false;
         fact.resize(N+1);
@@ -27,7 +27,7 @@ public:
         n = N;
         return true;
     }
- 
+
     long long power(long long a, unsigned long long b){
         long long ret{1};
         while(b){
@@ -39,11 +39,11 @@ public:
         }
         return ret;
     }
- 
+
     long long inv(long long a){ // GCD(a, m) = 1
         return power(a, m - 2);
     }
- 
+
     long long permutation(int n, int r){
         if(n < r) return 0;
         if(n < 0 || r < 0) return 0;
@@ -51,7 +51,7 @@ public:
         ret = ret * inv_factorial(n - r) % m;
         return ret;
     }
- 
+
     long long combination(int n, int r){
         if(n < r) return 0;
         if(n < 0 || r < 0) return 0;
@@ -62,12 +62,12 @@ public:
     long long multi_combination(int n, int r){
         return combination(n + r - 1, r);
     }
- 
+
     long long factorial(int a){
         if(a > n) resize(a);
         return fact[a];
     }
- 
+
     long long inv_factorial(int a){
         if(a > n) resize(a);
         return fact_inv[a];

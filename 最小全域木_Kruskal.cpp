@@ -6,12 +6,12 @@ struct edge{
     int from, to, cost;
     edge(int From, int To, int Cost): from(From), to(To), cost(Cost){};
 };
- 
+
 
 bool edgeComp(const edge& e1, const edge& e2){
     return e1.cost < e2.cost;
 }
- 
+
 class UnionFind{
     int n;
     std::vector<int> par;//根ならマイナス*要素数
@@ -69,9 +69,8 @@ public:
         return ret;
     }
 };
- 
-long long kruskal_Cost(std::vector<edge>& G){
-    int V{int(G.size())};
+
+long long kruskal_Cost(int V, std::vector<edge>& G){
     std::sort(std::begin(G), std::end(G), edgeComp);
     long long res{};
     UnionFind UF(V);
@@ -83,9 +82,8 @@ long long kruskal_Cost(std::vector<edge>& G){
     }
     return res;
 }
- 
-std::pair<long long, std::vector<edge>> kruskal(std::vector<edge>& G){
-    int V{int(G.size())};
+
+std::pair<long long, std::vector<edge>> kruskal(int V, std::vector<edge>& G){
     std::sort(std::begin(G), std::end(G), edgeComp);
     long long res{};
     std::vector<edge> T;
@@ -99,4 +97,3 @@ std::pair<long long, std::vector<edge>> kruskal(std::vector<edge>& G){
     }
     return {res, T};
 }
- 
