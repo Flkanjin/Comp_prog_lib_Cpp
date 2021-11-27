@@ -27,7 +27,7 @@ struct edge{
 };
 
 void initialFromGraphList_Cost(std::vector<std::vector<edge>>& G, std::vector<std::vector<long long>>& d){
-    int V{int(d.size())};
+    int V{int(G.size())};
     d.resize(V);
     for(int i{0}; i < V; ++i){
         d[i].resize(V, LINF);
@@ -41,7 +41,7 @@ void initialFromGraphList_Cost(std::vector<std::vector<edge>>& G, std::vector<st
 
 
 void initialFromGraphList_WitoutCost(std::vector<std::vector<int>>& G, std::vector<std::vector<long long>>& d){
-    int V{int(d.size())};
+    int V{int(G.size())};
     d.resize(V);
     for(int i{0}; i < V; ++i){
         d[i].resize(V, LINF);
