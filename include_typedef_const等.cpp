@@ -49,7 +49,7 @@ template<class T, class S> inline bool chmin(T &a, const S &b){
     if(b < a){a = b; return true;}
     return false;
 }
-template<class T, class S> inline bool exist(std::set<T> &s, const S &e){
+template<class T, class Container> inline bool exist(Container &s, const T &e){
     return (s.find(e) != std::end(s));
 }
 template<class T> inline bool inside(T x, T lx, T rx){
