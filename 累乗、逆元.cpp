@@ -18,7 +18,7 @@ long long power(long long a, unsigned long long b) {
 }
 
 long long inv(int a, long long m){ // GCD(a, m) = 1
-    return power(a, m-2);
+    return power(a, m-2, m);
 }
 
 long long inv(int a){
