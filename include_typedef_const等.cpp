@@ -52,8 +52,8 @@ template<class T, class S> inline bool chmin(T &a, const S &b){
 template<class T, class Container> inline bool exist(Container &s, const T &e){
     return (s.find(e) != std::end(s));
 }
-template<class T> inline bool inside(T x, T lx, T rx){
-    return (std::clamp(x, lx, rx) == x);
+template<class T> inline bool inside(T x, T lx, T rx){ //semi-open
+    return (std::clamp(x, lx, rx-1) == x);
 }
 template<class T> inline bool inside(T x, T y, T lx, T rx, T ly, T ry){
     return inside(x, lx, rx) && inside(y, ly, ry);
