@@ -23,8 +23,8 @@ void dijkstra(int s, std::vector<std::vector<edge>> &G, std::vector<long long> &
                         std::vector<std::pair<long long, int>>,
                         std::greater<std::pair<long long, int>>> que;
     int V{int(G.size())};
-    d.resize(V, LINF+3);
-    prv.resize(V, NIL);
+    d.assign(V, LINF+3);
+    prv.assign(V, NIL);
     d[s] = 0;
     que.emplace(0, s);
 
@@ -48,8 +48,8 @@ void dijkstraWithoutCost(int s, std::vector<std::vector<int>> &G, std::vector<lo
                         std::vector<std::pair<long long, int>>,
                         std::greater<std::pair<long long, int>>> que;
     int V{int(G.size())};
-    d.resize(V, LINF+3);
-    prv.resize(V, NIL);
+    d.assign(V, LINF+3);
+    prv.assign(V, NIL);
     d[s] = 0;
     que.emplace(0, s);
 
