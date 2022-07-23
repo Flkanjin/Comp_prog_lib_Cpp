@@ -1,4 +1,3 @@
-#define _USE_MATH_DEFIMES
 #include <algorithm>
 #include <array>
 #include <bitset>
