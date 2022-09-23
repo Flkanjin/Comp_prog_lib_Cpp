@@ -28,7 +28,7 @@ public:
     }
     LowestCommonAncestorDoubling(std::vector<std::vector<edge>> &G): child(G){
         V = child.size();
-        par.resize(V, {NIL, NIL});
+        par.resize(V);
         for(int i{0}; i < V; ++i){
             for(auto &e: child[i]){
                 par[e.to].to = i;
@@ -44,9 +44,9 @@ public:
 private:
     void build(){
         M = int(std::log2(V)) + 3;
-        ances.resize(V); d.resize(V, -1); dep.resize(V, -1);
+        ances.resize(V); d.assign(V, -1); dep.assign(V, -1);
         for(int i{0}; i < V; ++i){
-            ances[i].resize(M, NIL);
+            ances[i].assign(M, NIL);
             ances[i][0] = par[i].to;
         }
         for(int j{0}, j_len{M-1}; j < j_len; ++j){
@@ -86,6 +86,15 @@ public:
         int a{LCA(u, v)};
         return d[u] + d[v] - 2 * d[a];
     }
+    int nth_ances(int v, int n) const{
+        if(dep[v] < n) return NIL;
+        for(int i{}; i < M; ++i){
+            if(!n) break;
+            if(n & 1) v = ances[v][i];
+            n >>= 1;
+        }
+        return v;
+    }
 };
 
 //木のグラフを親への有向グラフへ
@@ -100,7 +109,7 @@ void treeToParentDFS(int cur, std::vector<edge> &par, std::vector<std::vector<ed
 }
 std::vector<edge> treeToParent(int root, std::vector<std::vector<edge>> &G){
     int V(G.size());
-    std::vector<edge> par(V, {NIL, NIL});
+    std::vector<edge> par(V);
     treeToParentDFS(root, par, G);
     return par;
 }
@@ -117,7 +126,7 @@ void treeToParentDFSWithoutCost(int cur, std::vector<edge> &par, std::vector<std
 }
 std::vector<edge> treeToParentWithoutCost(int root, std::vector<std::vector<int>> &G){
     int V(G.size());
-    std::vector<edge> par(V, {NIL, NIL});
+    std::vector<edge> par(V);
     treeToParentDFSWithoutCost(root, par, G);
     return par;
 }
