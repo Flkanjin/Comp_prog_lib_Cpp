@@ -9,8 +9,8 @@ const long double EPS = 1E-10;
 class Point2D{
     long double x, y;
 public:
-    Point2D(long double X=0, long double Y=0): x(X), y(Y){}
-    Point2D(const Point2D& v): x(v.x), y(v.y){}
+    Point2D(long double X=0, long double Y=0): x{X}, y{Y}{}
+    Point2D(const Point2D& v): x{v.x}, y{v.y}{}
     template<class T>
     Point2D(const std::vector<T> &v){
         assert(v.size() == 2);
@@ -80,7 +80,7 @@ public:
 
     long double norm(){return x*x + y*y;}
     friend long double norm(Point2D v){return v.norm();}
-    long double abs(){return sqrt(norm());}
+    long double abs(){return std::sqrt(norm());}
     friend long double abs(Point2D v){return v.abs();}
 
     bool operator<(const Point2D &v) const{
@@ -158,13 +158,13 @@ public:
     }
 
     Point2D rotateDegree(long double ang){
-        long double rad(ang * M_PI / 180);
+        long double rad(ang * std::acos(-1.L) / 180);
         long double cs(std::cos(rad)), sn(std::sin(rad));
         return Point2D(x * cs - y * sn, x * sn + y * cs);
     }
 
-    Point2D rotateDegree(long double ang, Point2D center){
-        return center + (*this - center).rotateDegree(ang);
+    Point2D rotateDegree(long double ang, Point2D centre){
+        return centre + (*this - centre).rotateDegree(ang);
     }
 };
 using Vector2D = Point2D;
@@ -173,7 +173,7 @@ class Line2D{
     Point2D p1, p2;
 public:
     Line2D(){}
-    Line2D(Point2D a, Point2D b): p1(a), p2(b){}
+    Line2D(Point2D a, Point2D b): p1{a}, p2{b}{}
 
     void setP1(const Point2D p){p1 = p;}
     Point2D getP1(){return p1;}
@@ -181,8 +181,8 @@ public:
     Point2D getP2(){return p2;}
 
     Point2D project(Point2D p){
-        Point2D base(p2 - p1);
-        long double r(dot(p - p1, base) / norm(base));
+        Point2D base{p2 - p1};
+        long double r{dot(p - p1, base) / norm(base)};
         return p1 + base * r;
     }
 
@@ -207,24 +207,24 @@ public:
     }
 
     friend Point2D getCrossPoint(Line2D s1, Line2D s2){
-        Vector2D base(s2.p2 - s2.p1);
-        long double d1(std::abs(cross(base, s1.p1 - s2.p1)));
-        long double d2(std::abs(cross(base, s1.p2 - s2.p1)));
-        long double t(d1 / (d1 + d2));
+        Vector2D base{s2.p2 - s2.p1};
+        long double d1{std::abs(cross(base, s1.p1 - s2.p1))};
+        long double d2{std::abs(cross(base, s1.p2 - s2.p1))};
+        long double t{d1 / (d1 + d2)};
         return s1.p1 + (s1.p2 - s1.p1) * t;
     }
 };
 using Segment2D = Line2D;
 
 class Circle2D{
-    Point2D center;
+    Point2D centre;
     long double radius;
 public:
-    Circle2D(Point2D c = Point2D(0, 0), long double r = 0.0): center(c), radius(r){}
-    Circle2D(const Circle2D& cir): center(cir.center), radius(cir.radius){}
+    Circle2D(Point2D c = Point2D(0, 0), long double r = 0.0): centre{c}, radius{r}{}
+    Circle2D(const Circle2D& cir): centre{cir.centre}, radius{cir.radius}{}
 
-    void setCenter(Point2D c){center = c;}
-    Point2D getCenter(){return center;}
+    void setCentre(Point2D c){centre = c;}
+    Point2D getCentre(){return centre;}
     void setRadius(long double r){radius = r;}
     long double getRadius(){return radius;}
 };
@@ -232,19 +232,19 @@ public:
 using Polygon2D = std::vector<Point2D>;
 
 Polygon2D convex_hll(std::vector<Point2D> &v){
-    int n(v.size()), k(0);
+    int n{int(v.size())}, k{0};
     auto comp = [](Point2D a, Point2D b){
         if(a.getX() != b.getX()) return a.getX() < b.getX();
-        else return a.getY() < b.getY();
+        return a.getY() < b.getY();
     };
     std::sort(std::begin(v), std::end(v), comp);
     std::vector<Point2D> ret(2*n);
     //下側
-    for(int i(0); i < n; ret[k++] = v[i++]){
+    for(int i{0}; i < n; ret[k++] = v[i++]){
         while(k >= 2 && cross(ret[k-1] - ret[k-2], v[i] - ret[k-1]) < 0) --k;
     }
     //上側
-    for(int i(n-2), t = k + 1; i >= 0; ret[k++] = v[i--]){
+    for(int i{n-2}, t = k + 1; i >= 0; ret[k++] = v[i--]){
         while(k >= t && cross(ret[k-1] - ret[k-2], v[i] - ret[k-1]) < 0) --k;
     }
     ret.resize(k-1);

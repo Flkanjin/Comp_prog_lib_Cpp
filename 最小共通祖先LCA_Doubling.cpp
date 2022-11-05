@@ -1,12 +1,12 @@
 #include <vector>
 #include <cmath>
-const int NIL = -1;
+const int NIL{-1};
 
 
 struct edge{
     int to, cost;
-    edge(int To, int Cost): to(To), cost(Cost){}
-    edge(): to(NIL), cost(NIL){}
+    edge(int To, int Cost): to{To}, cost{Cost}{}
+    edge(): to{NIL}, cost{NIL}{}
 };
 
 class LowestCommonAncestorDoubling{
@@ -17,7 +17,7 @@ class LowestCommonAncestorDoubling{
     std::vector<std::vector<int>> ances;
     int V, M, root;
 public:
-    LowestCommonAncestorDoubling(std::vector<edge> &p): par(p){
+    LowestCommonAncestorDoubling(std::vector<edge> &p): par{p}{
         V = par.size();
         child.resize(V);
         for(int i{0}; i < V; ++i){
@@ -26,7 +26,7 @@ public:
         }
         build();
     }
-    LowestCommonAncestorDoubling(std::vector<std::vector<edge>> &G): child(G){
+    LowestCommonAncestorDoubling(std::vector<std::vector<edge>> &G): child{G}{
         V = child.size();
         par.resize(V);
         for(int i{0}; i < V; ++i){
@@ -108,7 +108,7 @@ void treeToParentDFS(int cur, std::vector<edge> &par, std::vector<std::vector<ed
     return;
 }
 std::vector<edge> treeToParent(int root, std::vector<std::vector<edge>> &G){
-    int V(G.size());
+    int V{int(G.size())};
     std::vector<edge> par(V);
     treeToParentDFS(root, par, G);
     return par;
@@ -125,7 +125,7 @@ void treeToParentDFSWithoutCost(int cur, std::vector<edge> &par, std::vector<std
     return;
 }
 std::vector<edge> treeToParentWithoutCost(int root, std::vector<std::vector<int>> &G){
-    int V(G.size());
+    int V{int(G.size())};
     std::vector<edge> par(V);
     treeToParentDFSWithoutCost(root, par, G);
     return par;

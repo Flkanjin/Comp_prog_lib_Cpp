@@ -3,7 +3,7 @@ inline int grayCode(int i){
 }
 
 inline int invGrayCode(int j){
-    for(int k(0); k < 5; ++k){// 2pow(5) = 32
+    for(int k{0}; k < 5; ++k){// 2pow(5) = 32
         j = j ^ (j >> (1<<k));
     }
     return j;
@@ -17,7 +17,7 @@ void bitSearch(int n){
     int prvj(0);
     // i = 0 の時の処理
 
-    for(int i(1), i_len(1 << n); i < i_len; ++i){
+    for(int i{1}, i_len{1 << n}; i < i_len; ++i){
         int j = grayCode(i);
         int changebit = j ^ prvj;
         if(j & changebit){// changeBit が立った

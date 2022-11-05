@@ -1,7 +1,7 @@
 
 // sum[i: 0-> n-1] floor((a*i + b) / m)
 long long floor_sum(long long n, long long m, long long a, long long b) {
-    long long ans(0);
+    long long ans{0};
     if(a >= m){
         ans += (n - 1) * n / 2 * (a / m);
         a %= m;

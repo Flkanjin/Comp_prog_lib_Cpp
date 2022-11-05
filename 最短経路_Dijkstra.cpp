@@ -2,13 +2,8 @@
 #include <algorithm>
 #include <queue>
 #include <vector>
-const int NIL = -1;
-const long long LINF = 1'000'000'000'000'000'000; // 1e18
-
-struct edge{
-    int to, cost;
-    edge(int To, int Cost): to(To), cost(Cost){}
-};
+const int NIL{-1};
+const long long LINF{1'000'000'000'000'000'000}; // 1e18
 
 /*
 int V; //頂点数
@@ -16,6 +11,11 @@ std::vector<std::vector<edge>> G;  std::vector<int> G;
 std::vector<int> d; //sからの距離
 */
 
+struct edge{
+    int to, cost;
+    edge(int To, int Cost): to{To}, cost{Cost}{}
+    edge(): to{NIL}, cost{NIL}{}
+};
 
 void dijkstra(int s, std::vector<std::vector<edge>> &G, std::vector<long long> &d, std::vector<int> &prv){
     //pair<int, int> first: 距離　second: 頂点
@@ -29,7 +29,7 @@ void dijkstra(int s, std::vector<std::vector<edge>> &G, std::vector<long long> &
     que.emplace(0, s);
 
     while(!que.empty()){
-        std::pair<long long, int> p{que.top()}; que.pop();
+        auto p{que.top()}; que.pop();
         int v{p.second};
         if(d[v] < p.first) continue;
         for(edge &e: G[v]){
@@ -54,7 +54,7 @@ void dijkstraWithoutCost(int s, std::vector<std::vector<int>> &G, std::vector<lo
     que.emplace(0, s);
 
     while(!que.empty()){
-        std::pair<long long, int> p{que.top()}; que.pop();
+        auto p{que.top()}; que.pop();
         int v{p.second};
         if(d[v] < p.first) continue;
         for(int &u: G[v]){
@@ -70,9 +70,9 @@ void dijkstraWithoutCost(int s, std::vector<std::vector<int>> &G, std::vector<lo
 
 std::vector<int> buildPath(const std::vector<int> &prv, int t){
     std::vector<int> path;
-    for(int u = t; u >= 0; u = prv[u]){
+    for(int u{t}; u >= 0; u = prv[u]){
         path.push_back(u);
     }
-    reverse(path.begin(), path.end());
+    std::reverse(std::begin(path), std::end(path));
     return path;
 }

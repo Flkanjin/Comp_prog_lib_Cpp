@@ -7,8 +7,8 @@ class UnionFind{
     std::vector<int> par;//根ならマイナス*要素数
 
 public:
-    UnionFind(): n(0){}
-    UnionFind(int N): n(N), par(n, -1){}
+    UnionFind(): n{0}{}
+    UnionFind(int N): n{N}, par(n, -1){}
 
     void resize(int N){
         n = N;
@@ -67,9 +67,9 @@ template<class AbelianG> class WeightedUnionFind{
     std::vector<AbelianG> diff_weight;
 
 public:
-    WeightedUnionFind(): n(0){}
+    WeightedUnionFind(): n{0}{}
     WeightedUnionFind(int N, AbelianG UNITY = 0):
-        n(N), par(n, -1), diff_weight(n, UNITY){}
+        n{N}, par(n, -1), diff_weight(n, UNITY){}
 
     void resize(int N, AbelianG UNITY = 0){
         n = N;
@@ -127,8 +127,7 @@ public:
             ret[root_buf[i]].push_back(i);
         }
         ret.erase(
-            std::remove_if(std::begin(ret), std::end(ret),
-                [&](const std::vector<int>& v){return v.empty();}),
+            std::remove_if(std::begin(ret), std::end(ret), [&](const std::vector<int>& v){return v.empty();}),
             std::end(ret));
         return ret;
     }

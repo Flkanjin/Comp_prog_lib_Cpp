@@ -1,16 +1,18 @@
 #include <vector>
 #include <stack>
+const int NIL{-1};
 
 struct edge{
     int to, cost;
-    edge(int To, int Cost): to(To), cost(Cost){};
+    edge(int To, int Cost): to{To}, cost{Cost}{}
+    edge(): to{NIL}, cost{NIL}{}
 };
 
 // 0 -> goal をDAGに
 std::vector<std::vector<edge>> makeDAG_Cost(std::vector<std::vector<edge>>& G, std::vector<int>& d, int goal){
-    int V(G.size());
+    int V{int(G.size())};
     std::vector<std::vector<edge>> DAG(V);
-    for(int i(0); i < V; ++i){
+    for(int i{0}; i < V; ++i){
         if(d[i] > d[goal]) continue;
         if(d[i] == d[goal] && i != goal) continue;
         for(auto e : G[i]){
@@ -24,9 +26,9 @@ std::vector<std::vector<edge>> makeDAG_Cost(std::vector<std::vector<edge>>& G, s
 }
 
 std::vector<std::vector<int>> makeDAGWithoutCost(std::vector<std::vector<int>>& G, std::vector<int>& d, int goal){
-    int V(G.size());
+    int V{int(G.size())};
     std::vector<std::vector<int>> DAG(V);
-    for(int i(0); i < V; ++i){
+    for(int i{0}; i < V; ++i){
         if(d[i] > d[goal]) continue;
         if(d[i] == d[goal] && i != goal) continue;
         for(auto e : G[i]){
@@ -44,18 +46,18 @@ std::vector<std::vector<int>> makeDAGWithoutCost(std::vector<std::vector<int>>& 
 //隣接リストがCost持ち
 std::vector<int> topologicalSort_Cost(std::vector<std::vector<edge>>& DAG){
     std::vector<int> ret;
-    int V(DAG.size());
+    int V{int(DAG.size())};
     std::vector<int> h(V, 0); //入次数
-    for(int i(0); i < V; ++i){
+    for(int i{0}; i < V; ++i){
         for(auto& e : DAG[i]){
             ++h[e.to];
         }
     }
     std::stack<int> st;
-    for(int i(0); i < V; ++i)
+    for(int i{0}; i < V; ++i)
         if(!h[i]) st.push(i);
     while(st.size()){
-        int i(st.top()); st.pop();
+        int i{st.top()}; st.pop();
         ret.push_back(i);
         for(auto& e: DAG[i]){
             --h[e.to];
@@ -68,18 +70,18 @@ std::vector<int> topologicalSort_Cost(std::vector<std::vector<edge>>& DAG){
 //隣接リストがCostなし
 std::vector<int> topologicalSortWithoutCost(std::vector<std::vector<int>>& DAG){
     std::vector<int> ret;
-    int V(DAG.size());
+    int V{int(DAG.size())};
     std::vector<int> h(V, 0); //入次数
-    for(int i(0); i < V; ++i){
+    for(int i{0}; i < V; ++i){
         for(auto& e : DAG[i]){
             ++h[e];
         }
     }
     std::stack<int> st;
-    for(int i(0); i < V; ++i)
+    for(int i{0}; i < V; ++i)
         if(!h[i]) st.push(i);
     while(st.size()){
-        int i(st.top()); st.pop();
+        int i{st.top()}; st.pop();
         ret.push_back(i);
         for(auto& e: DAG[i]){
             --h[e];

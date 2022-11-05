@@ -3,12 +3,13 @@
 #include <queue>
 #include <utility>
 #include <vector>
-const int INF = 1'000'000'000; //1e9
-const int NIL = -1;
+const int INF{1'000'000'000}; //1e9
+const int NIL{-1};
 
 struct edge{
     int to, cost;
-    edge(int To, int Cost): to(To), cost(Cost){}
+    edge(int To, int Cost): to{To}, cost{Cost}{}
+    edge(): to{NIL}, cost{NIL}{}
 };
 
 

@@ -13,7 +13,7 @@ public:
         while(i < m) i *= 2;
         n = i;
         dat.resize(2*i - 1);
-        for(int j(0), j_len(2*i-1); j < j_len; ++j)
+        for(int j{0}, j_len{2*i-1}; j < j_len; ++j)
             dat[j] = fill;
     }
 
@@ -55,7 +55,7 @@ public:
         while(i < m) i *= 2;
         n = i;
         dat.resize(2*i - 1);
-        for(int j(0), j_len(2*i-1); j < j_len; ++j)
+        for(int j{0}, j_len{2*i-1}; j < j_len; ++j)
             dat[j] = fill;
     }
 
@@ -98,7 +98,7 @@ public:
         while(i < m) i *= 2;
         n = i;
         dat.resize(2*i - 1);
-        for(int j(0), j_len(2*i-1); j < j_len; ++j)
+        for(int j{0}, j_len{2*i-1}; j < j_len; ++j)
             dat[j] = fill;
     }
 

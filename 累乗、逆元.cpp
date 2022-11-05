@@ -1,7 +1,7 @@
-const int MOD = 1'000'000'007;
+const int MOD{1'000'000'007};
 
 long long power(long long a, unsigned long long b, long long m){
-    long long ret(1);
+    long long ret{1};
     while(b){
         if(b & 1) ret = (ret * a) % m;
         a = (a * a) % m;

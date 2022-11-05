@@ -6,10 +6,10 @@ private:
     int n;
     std::vector<long long> fact, fact_inv;
 public:
-    comb_perm(): n(0), fact(1), fact_inv(1){
+    comb_perm(): n{0}, fact(1), fact_inv(1){
         fact[0] = fact_inv[0] = 1;
     }
-    comb_perm(int N): n(N), fact(N+1), fact_inv(N+1){
+    comb_perm(int N): n{N}, fact(N+1), fact_inv(N+1){
         fact[0] = fact[1] = fact_inv[0] = fact_inv[1] = 1;
         for(int i{2}; i <= n; ++i) fact[i] = fact[i - 1] * i % m;
         for(int i{2}; i <= n; ++i) fact_inv[i] = inv(fact[i]);

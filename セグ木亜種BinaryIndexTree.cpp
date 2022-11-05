@@ -5,8 +5,8 @@ template<class T> class BinaryIndexTree{
     int n;
     std::vector<unsigned long long> data;
 public:
-    BinaryIndexTree(): n(0){}
-    BinaryIndexTree(int m): n(m), data(m){}
+    BinaryIndexTree(): n{0}{}
+    BinaryIndexTree(int m): n{m}, data(m){}
 
     void add(int k, T a){
         ++k;
@@ -22,7 +22,7 @@ public:
     }
 private:
     unsigned long long sum(int r){
-        unsigned long long s(0);
+        unsigned long long s{0};
         while(r > 0){
             s += data[r-1];
             r -= r & -r;

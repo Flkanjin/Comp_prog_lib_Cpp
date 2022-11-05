@@ -1,6 +1,6 @@
 #include <cassert>
 #include <vector>
-
+#include <iostream>
 
 template <class T> class Matrix{
 private:
@@ -8,25 +8,25 @@ private:
 public:
     Matrix(){}
 
-    Matrix(size_t m, size_t n): A(m, std::vector<T>(n, 0)) {}
+    Matrix(std::size_t m, std::size_t n): A(m, std::vector<T>(n, 0)) {}
 
-    Matrix(size_t n): A(n, std::vector<T>(n, 0)) {}
+    Matrix(std::size_t n): A(n, std::vector<T>(n, 0)) {}
 
-    Matrix(size_t m, size_t n, T a): A(m, std::vector<T>(n, a)) {}
+    Matrix(std::size_t m, std::size_t n, T a): A(m, std::vector<T>(n, a)) {}
 
     Matrix(const Matrix& mat){if(this != &mat) A = mat.A;}
 
     Matrix(const std::vector<std::vector<T>> &v){
-        size_t m = v.size();
+        std::size_t m{v.size()};
         assert(m != 0);
-        size_t  n(v[0].size());
-        for(int i(0); i < m; ++i)
+        std::size_t n{v[0].size()};
+        for(int i{0}; i < m; ++i)
             assert(v[i].size() == n);
         A = v;
     }
 
     Matrix(const std::vector<T> &v){
-        size_t m = v.size();
+        std::size_t m{v.size()};
         assert(m != 0);
         A.resize(1);
         A[0] = v;
@@ -34,38 +34,38 @@ public:
 
     ~Matrix() {}
 
-    size_t height() const{return A.size();}
+    std::size_t height() const{return A.size();}
 
-    size_t width() const{
+    std::size_t width() const{
         if(!height()) return 0;
         return A[0].size();
     }
 
-    void setHeight(int h){A.resize(h, std::vector<T>(width(), 0));}
+    void setHeight(std::size_t h){A.resize(h, std::vector<T>(width(), 0));}
 
-    void setWidth(int w){
-        size_t m = height();
-        for(int i(0); i < m; ++i) A[i].resize(w, 0);
+    void setWidth(std::size_t w){
+        std::size_t m{height()};
+        for(int i{0}; i < m; ++i) A[i].resize(w, 0);
     }
 
-    void setSize(int h, int w){
+    void setSize(std::size_t h, std::size_t w){
         setHeight(h); setWidth(w);
     }
 
     void inputNoChangeSize(){
-        size_t m = height(), n = width();
-        for(int i(0); i < m; ++i)
-            for(int j(0); j < n; ++j)
+        std::size_t m{height()}, n{width();}
+        for(int i{0}; i < m; ++i)
+            for(int j{0}; j < n; ++j)
                 std::cin >> A[i][j];
     }
 
-    void input(int h, int w){
+    void input(std::size_t h, std::size_t w){
         setSize(h, w);
         inputNoChangeSize();
     }
 
     void input(){
-        int h, w; std::cin >> h >> w;
+        std::size_t h, w; std::cin >> h >> w;
         input(h, w);
     }
 
@@ -78,9 +78,9 @@ public:
     inline std::vector<T> &operator[](int k){return (A.at(k));}
 
     void print2D(int w) const{
-        size_t m = height(), n = width();
-        for(int i(0); i < m; ++i){
-            for(int j(0); j < n; ++j){
+        std::size_t m{height()}, n{width()};
+        for(int i{0}; i < m; ++i){
+            for(int j{0}; j < n; ++j){
                 if(j) std::cout << " ";
                 std::cout << std::setw(w) << (*this)[i][j];
             }
@@ -89,9 +89,9 @@ public:
     }
 
     void print2D() const{
-        size_t m = height(), n = width();
-        for(int i(0); i < m; ++i){
-            for(int j(0); j < n; ++j){
+        std::size_t m{height()}, n{width()};
+        for(int i{0}; i < m; ++i){
+            for(int j{0}; j < n; ++j){
                 if(j) std::cout << " ";
                 std::cout << (*this)[i][j];
             }
@@ -100,9 +100,9 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Matrix& B){
-        size_t m = B.height(), n = B.width();
-        for(int i(0); i < m; ++i){
-            for(int j(0); j < n; ++j){
+        std::size_t m{B.height()}, n{B.width()};
+        for(int i{0}; i < m; ++i){
+            for(int j{0}; j < n; ++j){
                 if(j) os << " ";
                 os << B[i][j];
             }
@@ -111,111 +111,87 @@ public:
         return (os);
     }
 
-    static Matrix identity(size_t n){
+    static Matrix identity(std::size_t n){
         Matrix ret(n);
-        for(int i(0); i < n; ++i) ret[i][i] = 1;
+        for(int i{0}; i < n; ++i) ret[i][i] = 1;
         return ret;
     }
 
     Matrix transpose() const{
-        size_t n = height(), m = width();
+        std::size_t n{height()}, m{width();}
         Matrix ret(m, n);
-        for(int i(0); i < m; ++i)
-            for(int j(0); j < n; ++j)
-                ret[i][j] = (*this)[j][i];
+        for(int i{0}; i < m; ++i) for(int j{0}; j < n; ++j) ret[i][j] = (*this)[j][i];
         return ret;
     }
 
     Matrix operator+() const{return *this;}
 
     Matrix operator-() const{
-        size_t m = height(), n = width();
+        std::size_t m{height()}, n{width()};
         Matrix temp(height(), width());
-        for(int i(0); i < m; ++i)
-            for(int j(0); j < n; ++j)
-                temp[i][j] = -(*this)[i][j];
+        for(int i{0}; i < m; ++i) for(int j{0}; j < n; ++j) temp[i][j] = -(*this)[i][j];
         return temp;
     }
 
     Matrix& operator=(const Matrix& B){
-        if(this != &B){
-            A = B.A;
-        }
+        if(this != &B) A = B.A;
         return *this;
     }
 
     Matrix& operator+=(const Matrix& B){
         assert(sameSize(B));
-        size_t m = height(), n = width();
-        for(int i(0); i < m; ++i)
-            for(int j(0); j < n; ++j)
-                (*this)[i][j] += B[i][j];
+        std::size_t m{height()}, n{width()};
+        for(int i{0}; i < m; ++i) for(int j{0}; j < n; ++j) (*this)[i][j] += B[i][j];
         return *this;
     }
 
     Matrix& operator-=(const Matrix& B){
         assert(sameSize(B));
-        size_t m = height(), n = width();
-        for(int i(0); i < m; ++i)
-            for(int j(0); j < n; ++j)
-                (*this)[i][j] -= B[i][j];
+        std::size_t m{height()}, n{width()};
+        for(int i{0}; i < m; ++i) for(int j{0}; j < n; ++j) (*this)[i][j] -= B[i][j];
         return *this;
     }
 
     Matrix& operator*=(const Matrix& B){
-        size_t m = height(), n = width(), l = B.width();
+        std::size_t m{height()}, n{width()}, l = B.width();
         assert(n == B.height());
         std::vector<std::vector<T>> C(m, std::vector<T>(l, 0));
-        for(int i(0); i < m; ++i)
-            for(int j(0); j < l; ++j)
-                for(int k(0); k < n; ++k)
-                    C[i][j] = (C[i][j] + (*this)[i][k] * B[k][j]);
+        for(int i{0}; i < m; ++i) for(int j{0}; j < l; ++j) for(int k{0}; k < n; ++k) C[i][j] = (C[i][j] + (*this)[i][k] * B[k][j]);
         A.swap(C);
         return *this;
     }
 
     Matrix& operator*=(const T a){
-        size_t m = height(), n = width();
-        for(int i(0); i < m; ++i)
-            for(int j(0); j < n; ++j)
-                (*this)[i][j] *= a;
+        std::size_t m{height()}, n{width()};
+        for(int i{0}; i < m; ++i) for(int j{0}; j < n; ++j) (*this)[i][j] *= a;
         return *this;
     }
 
     Matrix& operator%=(const long long &mod){
-        size_t m = height(), n = width();
-        for(int i(0); i < m; ++i)
-            for(int j(0); j < n; ++j)
-                (*this)[i][j] %= mod;
+        std::size_t m{height()}, n{width()};
+        for(int i{0}; i < m; ++i) for(int j{0}; j < n; ++j) (*this)[i][j] %= mod;
         return *this;
     }
 
     Matrix& operator^=(const Matrix &B){
         assert(sameSize(B));
-        size_t m = height(), n = width();
-        for(int i(0); i < m; ++i)
-            for(int j(0); j < n; ++j)
-                (*this)[i][j] ^= B[i][j];
+        std::size_t m{height()}, n{width()};
+        for(int i{0}; i < m; ++i) for(int j{0}; j < n; ++j) (*this)[i][j] ^= B[i][j];
         return *this;
     }
 
     Matrix& operator|=(const Matrix &B){
         assert(sameSize(B));
-        size_t m = height(), n = width();
-        for(int i(0); i < m; ++i)
-            for(int j(0); j < n; ++j)
-                (*this)[i][j] |= B[i][j];
+        std::size_t m{height()}, n{width()};
+        for(int i{0}; i < m; ++i) for(int j{0}; j < n; ++j) (*this)[i][j] |= B[i][j];
         return *this;
     }
 
     Matrix& operator&=(const Matrix &B){
-        size_t m = height(), n = width(), l = B.width();
+        std::size_t m{height()}, n{width()}, l{B.width()};
         assert(n == B.height());
         std::vector<std::vector<T>> C(m, std::vector<T>(l, 0));
-        for(int i(0); i < m; ++i)
-            for(int j(0); j < l; ++j)
-                for(int k(0); k < n; ++k)
-                    C[i][j] = (C[i][j] ^ ((*this)[i][k] & B[k][j]));
+        for(int i{0}; i < m; ++i) for(int j{0}; j < l; ++j) for(int k{0}; k < n; ++k) C[i][j] = (C[i][j] ^ ((*this)[i][k] & B[k][j]));
         A.swap(C);
         return *this;
     }
@@ -266,10 +242,8 @@ public:
 
     bool operator==(const Matrix& mat) const{
         if(!sameSize(mat)) return false;
-        size_t m = height(), n = width();
-        for(int i(0); i < m; ++i)
-            for(int j(0); j < n; ++j)
-                if((*this)[i][j] != mat[i][j]) return false;
+        std::size_t m{height()}, n{width()};
+        for(int i{0}; i < m; ++i) for(int j{0}; j < n; ++j) if((*this)[i][j] != mat[i][j]) return false;
         return true;
     }
 
@@ -277,15 +251,13 @@ public:
 
     Matrix modmul(const Matrix& B, long long mod){
         Matrix temp(*this);
-        size_t m = height(), n = width(), l = B.width();
+        std::size_t m{height()}, n{width()}, l = B.width();
         assert(n == B.height());
         std::vector<std::vector<T>> C(m, std::vector<T>(l, 0));
-        for(int i(0); i < m; ++i)
-            for(int j(0); j < l; ++j)
-                for(int k(0); k < n; ++k){
-                    C[i][j] = (C[i][j] + temp[i][k] * B[k][j]) % mod;
-                    if(C[i][j] < 0) C[i][j] += mod;
-                }
+        for(int i{0}; i < m; ++i) for(int j{0}; j < l; ++j) for(int k{0}; k < n; ++k){
+            C[i][j] = (C[i][j] + temp[i][k] * B[k][j]) % mod;
+            if(C[i][j] < 0) C[i][j] += mod;
+        }
         return C;
     }
     
@@ -294,7 +266,7 @@ public:
     }
 
     Matrix powWithoutMod(unsigned long long b) const{
-        size_t n = height();
+        std::size_t n{height()};
         assert(n == width());
         Matrix ret = identity(n);
         Matrix a = *this;
@@ -307,18 +279,16 @@ public:
     }
 
     Matrix power(unsigned long long b, long long mod) const{
-        size_t n = height();
+        std::size_t n{height()};
         assert(n == width());
         Matrix ret = identity(n);
         Matrix a = *this;
         while(b){
             if(b & 1) ret = ret.modmul(a, mod);
             a = a.modmul(a, mod);
-            for(int i(0); i < n; ++i){
-                for(int j(0); j < n; ++j){
-                    if(ret[i][j] < 0) ret[i][j] += mod;
-                    if(a[i][j] < 0) a[i][j] += mod;
-                }
+            for(int i{0}; i < n; ++i) for(int j{0}; j < n; ++j){
+                if(ret[i][j] < 0) ret[i][j] += mod;
+                if(a[i][j] < 0) a[i][j] += mod;
             }
             b /= 2;
         }
@@ -330,7 +300,7 @@ public:
     }
 
     Matrix powXorAnd(unsigned long long b) const{
-        size_t n = height();
+        std::size_t n{height()};
         assert(n == width());
         Matrix ret = identity(n);
         ret *= -1;
