@@ -1,5 +1,6 @@
 #include <vector>
 
+constexpr int INF{1'000'000'000}; //1e9
 
 template<class T> class SegmentTreeMin{
     int n = 0;
@@ -9,7 +10,7 @@ public:
     SegmentTreeMin(){}
     SegmentTreeMin(int m, T fil = INF){
         fill = fil;
-        int i = 1;
+        int i{1};
         while(i < m) i *= 2;
         n = i;
         dat.resize(2*i - 1);
@@ -19,7 +20,6 @@ public:
 
     void update(int k, T a){
         k += n - 1;
-        int moto = dat[k];
         dat[k] = a;
         while(k){
             k = (k - 1) / 2;
@@ -28,14 +28,11 @@ public:
     }
 
     T getMin(int a, int b, int k=0, int l=0, int r=-1){
-        //[a, b[であることに注意
+        // NOTE: [a, b[
         if(r < 0) r = n;
         if(r <= a || b <= l) return fill;
         if(a <= l && r <= b) return dat[k];
-
-        int vl = getMin(a, b, 2*k+1, l, (l+r)/2);
-        int vr = getMin(a, b, 2*k+2, (l+r)/2, r);
-        return std::min(vl, vr);
+        return std::min(getMin(a, b, 2*k+1, l, (l+r)/2), getMin(a, b, 2*k+2, (l+r)/2, r));
     }
 
     T getvalue(int k){
@@ -46,12 +43,12 @@ public:
 template<class T> class SegmentTreeMax{
     int n = 0;
     std::vector<T> dat;
-    T fill = INF;
+    T fill = -INF;
 public:
     SegmentTreeMax(){}
     SegmentTreeMax(int m, T fil = -INF){
         fill = fil;
-        int i = 1;
+        int i{1};
         while(i < m) i *= 2;
         n = i;
         dat.resize(2*i - 1);
@@ -61,7 +58,6 @@ public:
 
     void update(int k, T a){
         k += n - 1;
-        int moto = dat[k];
         dat[k] = a;
         while(k){
             k = (k - 1) / 2;
@@ -70,14 +66,11 @@ public:
     }
 
     T getMax(int a, int b, int k=0, int l=0, int r=-1){
-        //[a, b[であることに注意
+        // NOTE: [a, b[
         if(r < 0) r = n;
         if(r <= a || b <= l) return fill;
         if(a <= l && r <= b) return dat[k];
-
-        int vl = getMax(a, b, 2*k+1, l, (l+r)/2);
-        int vr = getMax(a, b, 2*k+2, (l+r)/2, r);
-        return std::max(vl, vr);
+        return std::max(getMax(a, b, 2*k+1, l, (l+r)/2), getMax(a, b, 2*k+2, (l+r)/2, r));
     }
 
     T getvalue(int k){
@@ -94,7 +87,7 @@ public:
     SegmentTreeSum(){}
     SegmentTreeSum(int m, T fil = 0){
         fill = fil;
-        int i = 1;
+        int i{1};
         while(i < m) i *= 2;
         n = i;
         dat.resize(2*i - 1);
@@ -104,7 +97,7 @@ public:
 
     void update(int k, T a){
         k += n - 1;
-        T moto = dat[k];
+        T moto{dat[k]};
         dat[k] = a;
         while(k){
             k = (k - 1) / 2;
@@ -127,22 +120,19 @@ public:
     }
 
     T getSum(int a, int b, int k=0, int l=0, int r=-1){
-        //[a, b[であることに注意
+        // NOTE: [a, b[
         if(r < 0) r = n;
         if(r <= a || b <= l) return fill;
         if(a <= l && r <= b) return dat[k];
-
-        T vl = getSum(a, b, 2*k+1, l, (l+r)/2);
-        T vr = getSum(a, b, 2*k+2, (l+r)/2, r);
-        return vl + vr;
+        return getSum(a, b, 2*k+1, l, (l+r)/2) + getSum(a, b, 2*k+2, (l+r)/2, r);
     }
 
     T getvalue(int k){
         return dat[k+n-1];
     }
 
-    bool getExist(int l, int r){//全て非負と仮定
-        //[l, r]
+    bool getExist(int l, int r){//Assume non-neg
+        // NOTE: [l, r]
         return (getSum(l, r+1) > fill);
     }
 };

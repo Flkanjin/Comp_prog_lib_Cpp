@@ -1,5 +1,6 @@
 #include <cassert>
 #include <vector>
+#include <iomanip>
 #include <iostream>
 
 template <class T> class Matrix{
@@ -53,7 +54,7 @@ public:
     }
 
     void inputNoChangeSize(){
-        std::size_t m{height()}, n{width();}
+        std::size_t m{height()}, n{width()};
         for(int i{0}; i < m; ++i)
             for(int j{0}; j < n; ++j)
                 std::cin >> A[i][j];
@@ -118,7 +119,7 @@ public:
     }
 
     Matrix transpose() const{
-        std::size_t n{height()}, m{width();}
+        std::size_t n{height()}, m{width()};
         Matrix ret(m, n);
         for(int i{0}; i < m; ++i) for(int j{0}; j < n; ++j) ret[i][j] = (*this)[j][i];
         return ret;

@@ -6,6 +6,11 @@
 const int INF{1'000'000'000}; //1e9
 const int NIL{-1};
 
+template<class T, class S> bool chmin(T &a, const S &b){
+    if(b < a){a = b; return true;}
+    return false;
+}
+
 struct edge{
     int to, cost;
     edge(int To, int Cost): to{To}, cost{Cost}{}
@@ -31,10 +36,7 @@ long long prim_Cost(std::vector<std::vector<edge>>& G){
         d[v] = 0;
         res += p.first;
         for(edge &e : G[v]){
-            if(d[e.to] > e.cost){
-                d[e.to] = e.cost;
-                que.emplace(d[e.to], e.to);
-            }
+            if(chmin(d[e.to], e.cost)) que.emplace(d[e.to], e.to);
         }
     }
     return res;

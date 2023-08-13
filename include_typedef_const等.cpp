@@ -1,8 +1,10 @@
 #include <algorithm>
 #include <array>
+#include <bit>
 #include <bitset>
 #include <cassert>
 #include <cctype>
+#include <chrono>
 #include <climits>
 #include <clocale>
 #include <cmath>
@@ -19,9 +21,11 @@
 #include <limits>
 #include <list>
 #include <map>
+#include <numbers>
 #include <numeric>
 #include <queue>
 #include <random>
+#include <ranges>
 #include <regex>
 #include <set>
 #include <sstream>
@@ -33,28 +37,25 @@
 #include <utility>
 #include <vector>
 
-const int MOD{1'000'000'007};
-const int MOD2{998'244'353};
-const int INF{1'000'000'000}; //1e9
-const int NIL{-1};
-const long long LINF{1'000'000'000'000'000'000}; // 1e18
-const long double EPS{1E-10L};
+constexpr int MOD{1'000'000'007};
+constexpr int MOD2{998'244'353};
+constexpr int INF{1'000'000'000}; //1e9
+constexpr int NIL{-1};
+constexpr long long LINF{1'000'000'000'000'000'000}; // 1e18
+constexpr long double EPS{1E-10L};
 
-template<class T, class S> inline bool chmax(T &a, const S &b){
+template<class T, class S> bool chmax(T &a, const S &b){
     if(a < b){a = b; return true;}
     return false;
 }
-template<class T, class S> inline bool chmin(T &a, const S &b){
+template<class T, class S> bool chmin(T &a, const S &b){
     if(b < a){a = b; return true;}
     return false;
 }
-template<class T, class Container> inline bool exist(Container &s, const T &e){
-    return (s.find(e) != std::end(s));
-}
-template<class T> inline bool inside(T x, T lx, T rx){ //semi-open
+template<class T> bool inside(T x, T lx, T rx){ //semi-open
     return (std::clamp(x, lx, rx-1) == x);
 }
-template<class T> inline bool inside(T x, T y, T lx, T rx, T ly, T ry){
+template<class T> bool inside(T x, T y, T lx, T rx, T ly, T ry){
     return inside(x, lx, rx) && inside(y, ly, ry);
 }
 
