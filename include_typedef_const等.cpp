@@ -9,6 +9,7 @@
 #include <clocale>
 #include <cmath>
 #include <complex>
+#include <concepts>
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
