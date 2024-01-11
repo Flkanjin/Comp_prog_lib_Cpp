@@ -1,6 +1,8 @@
 #include <algorithm>
 #include <vector>
-
+#include <ranges>
+namespace ranges = std::ranges;
+namespace views = ranges::views;
 
 class UnionFind{
     int n;
@@ -14,7 +16,11 @@ public:
         n = N;
         par.resize(n, -1);
     }
-
+    
+    void init(){
+        ranges::fill(par, -1);
+    }
+    
     int find(int x){
         if(par[x] < 0) return x;
         else return par[x] = find(par[x]);
@@ -75,6 +81,11 @@ public:
         n = N;
         par.resize(n, -1);
         diff_weight.resize(n, UNITY);
+    }
+    
+    void init(AbelianG UNITY = 0){
+        ranges::fill(par, -1);
+        ranges::fill(diff_weight, UNITY);
     }
 
     int find(int x){

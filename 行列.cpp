@@ -80,35 +80,16 @@ public:
 
     void print2D(int w) const{
         std::size_t m{height()}, n{width()};
-        for(int i{0}; i < m; ++i){
-            for(int j{0}; j < n; ++j){
-                if(j) std::cout << " ";
-                std::cout << std::setw(w) << (*this)[i][j];
-            }
-            std::cout << "\n";
-        }
+        for(int i{0}; i < m; ++i) for(int j{0}; j < n; ++j) std::cout << std::setw(w) << (*this)[i][j] << " \n"[j == n-1];
     }
 
     void print2D() const{
-        std::size_t m{height()}, n{width()};
-        for(int i{0}; i < m; ++i){
-            for(int j{0}; j < n; ++j){
-                if(j) std::cout << " ";
-                std::cout << (*this)[i][j];
-            }
-            std::cout << "\n";
-        }
+        std::cout << *this;
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Matrix& B){
         std::size_t m{B.height()}, n{B.width()};
-        for(int i{0}; i < m; ++i){
-            for(int j{0}; j < n; ++j){
-                if(j) os << " ";
-                os << B[i][j];
-            }
-            os << "\n";
-        }
+        for(int i{0}; i < m; ++i) for(int j{0}; j < n; ++j) os << B[i][j] << " \n"[j == n-1];
         return (os);
     }
 

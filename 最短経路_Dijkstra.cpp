@@ -4,6 +4,10 @@
 #include <vector>
 const int NIL{-1};
 const long long LINF{1'000'000'000'000'000'000}; // 1e18
+template<class T, class S> bool chmin(T &a, const S &b){
+    if(b < a){a = b; return true;}
+    return false;
+}
 
 /*
 int V; //頂点数
@@ -32,12 +36,9 @@ void dijkstra(int s, std::vector<std::vector<edge>> &G, std::vector<long long> &
         auto p{que.top()}; que.pop();
         int v{p.second};
         if(d[v] < p.first) continue;
-        for(edge &e: G[v]){
-            if(d[e.to] > d[v] + e.cost){
-                d[e.to] = d[v] + e.cost;
-                prv[e.to] = v;
-                que.emplace(d[e.to], e.to);
-            }
+        for(edge &e: G[v]) if(chmin(d[e.to], d[v] + e.cost)){
+            prv[e.to] = v;
+            que.emplace(d[e.to], e.to);
         }
     }
 }
@@ -57,12 +58,9 @@ void dijkstraWithoutCost(int s, std::vector<std::vector<int>> &G, std::vector<lo
         auto p{que.top()}; que.pop();
         int v{p.second};
         if(d[v] < p.first) continue;
-        for(int &u: G[v]){
-            if(d[u] > d[v] + 1){
-                d[u] = d[v] + 1;
-                prv[u] = v;
-                que.emplace(d[u], u);
-            }
+        for(int &u: G[v]) if(chmin(d[u], d[v] + 1)){
+            prv[u] = v;
+            que.emplace(d[u], u);
         }
     }
 }

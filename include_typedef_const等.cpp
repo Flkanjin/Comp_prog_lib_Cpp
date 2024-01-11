@@ -44,6 +44,9 @@ constexpr int INF{1'000'000'000}; //1e9
 constexpr int NIL{-1};
 constexpr long long LINF{1'000'000'000'000'000'000}; // 1e18
 constexpr long double EPS{1E-10L};
+using namespace std::literals;
+namespace ranges = std::ranges;
+namespace views = ranges::views;
 
 template<class T, class S> bool chmax(T &a, const S &b){
     if(a < b){a = b; return true;}
@@ -54,18 +57,14 @@ template<class T, class S> bool chmin(T &a, const S &b){
     return false;
 }
 template<class T> bool inside(T x, T lx, T rx){ //semi-open
-    return (std::clamp(x, lx, rx-1) == x);
+    return (ranges::clamp(x, lx, rx-1) == x);
 }
 template<class T> bool inside(T x, T y, T lx, T rx, T ly, T ry){
     return inside(x, lx, rx) && inside(y, ly, ry);
 }
-
-
-
-
-
-
-
+template<class Container> void print_contarner(Container &c, std::string sep = " "s, std::string end = "\n"s){
+    for(int i{int(std::size(c))}; auto e: c) std::cout << e << (--i ? sep : end);
+}
 
 
 
