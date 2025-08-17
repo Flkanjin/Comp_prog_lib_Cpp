@@ -62,9 +62,19 @@ template<class T> bool inside(T x, T lx, T rx){ //semi-open
 template<class T> bool inside(T x, T y, T lx, T rx, T ly, T ry){
     return inside(x, lx, rx) && inside(y, ly, ry);
 }
-template<class Container> void print_contarner(Container &c, std::string sep = " "s, std::string end = "\n"s){
+template<class T, class S> std::istream &operator>>(std::istream &is, std::pair<T, S> &p){
+    return is >> p.first >> p.second;
+}
+template<class T, class S> std::ostream &operator<<(std::ostream &os, const std::pair<T, S> &p){
+    return os << p.first << " " << p.second;
+}
+template<class T> std::istream &operator>>(std::istream &is, std::vector<T> &v){
+    {for(auto &e: v) is >> e;} return is;
+}
+template<class Container> void print_container(const Container &c, std::string sep = " "s, std::string end = "\n"s){
     for(int i{int(std::size(c))}; auto e: c) std::cout << e << (--i ? sep : end);
 }
+std::string yesno(bool x){return x ? "Yes"s : "No"s;}
 
 
 

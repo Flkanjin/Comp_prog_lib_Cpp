@@ -12,8 +12,8 @@ struct Edge{
 // d: 距離, prv: 最短経路での一つ前の頂点
 // 負閉路が存在しない 即ち最短距離が求まっている場合: true
 bool bellmanFord(int V, int s, std::vector<Edge> &G, std::vector<long long> &d, std::vector<int> &prv){
-    d.resize(V, LINF);
-    prv.resize(V, NIL);
+    d.assign(V, LINF);
+    prv.assign(V, NIL);
     d[s] = 0;
     bool negLoop = false;
     for(int i{0}; i < V; ++i){
